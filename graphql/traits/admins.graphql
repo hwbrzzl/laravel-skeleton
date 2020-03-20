@@ -1,0 +1,34 @@
+extend type Query {
+    "获取管理员分页数据"
+    adminPaginator(
+        paginator: PaginatorInput,
+        more: AdminPaginatorInput
+    ): [Admin] @getlist(resolver: "AdminPaginatorQuery@adminPaginator")
+
+}
+
+extend type Mutation @middleware(checks: ["auth.admin"]){
+
+}
+
+type Admin {
+    id: ID!
+    "用户名"
+    name: String!
+    "创建时间"
+    created_at: DateTime!
+    token: String
+}
+
+input AdminInput {
+    id: ID
+    "用户名"
+    name: String!
+    "密码"
+    password: String
+}
+
+input AdminPaginatorInput {
+    "账号名称"
+    name: String
+}
